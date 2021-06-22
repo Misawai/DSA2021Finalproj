@@ -14,15 +14,20 @@ int main()
 typedef struct disjoint_tree{
 	struct disjoint_tree *p;
 	int rank;
+	mail *data;
 }Tree;
 
 //Method 2 
-mail make_set();
+mail make_set(mail *data)
+{
+	
+}
 mail find_set();
 mail Union();
 void Group_Analysis()
 {
 	//disjoint set noneed to compressed since only query once or....
 	//if many queries impelemented, path compression is needed.
+	//I think I need to decleare a hash table to do a "correspond table of ID and index.
 	
 }
