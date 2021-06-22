@@ -16,7 +16,7 @@ typedef struct disjoint_tree{
 	int rank;
 }Tree;
 
-//Method 2
+//Method 2 
 mail make_set();
 mail find_set();
 mail Union();
