@@ -11,10 +11,13 @@ int main()
 	//struct int len(size of the set) int mids[512](id's)
 	
 }
+mail make_set();
+mail find_set();
+mail Union();
 void Group_Analysis()
 {
 	//disjoint set noneed to compressed since only query once or....
 	//if many queries impelemented, path compression is needed.
 	//
-	struct 
+	
 }
