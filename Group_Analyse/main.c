@@ -1,5 +1,10 @@
 #include<api.h>
 #include<stdio.h>
+#define MAX 10000
+
+
+
+
 int main()
 {
 	int n_mails, n_queries;
@@ -14,13 +19,16 @@ int main()
 typedef struct disjoint_tree{
 	struct disjoint_tree *p;
 	int rank;
-	mail *data;
 }Tree;
+
+disjoint_tree ds[MAX];
+
 
 //Method 2 
 mail make_set(mail *data)
 {
-	
+	//have to find a proper hash function inorder to sort names properly
+	//maybe using linear hashing is a good way, however it might be time consuming
 }
 mail find_set();
 mail Union();
