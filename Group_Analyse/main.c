@@ -27,11 +27,22 @@ disjoint_tree ds[MAX];
 //Method 2 
 mail make_set(mail *data)
 {
+	int i=hash(data);//TBC
+	ds[i].parent=i;
+	ds[i].rank=0;
 	//have to find a proper hash function inorder to sort names properly
 	//maybe using linear hashing is a good way, however it might be time consuming
+	
 }
-mail find_set();
-mail Union();
+mail find_set(const mail *data)
+{
+	
+	
+}
+mail Union()
+{
+	
+}
 void Group_Analysis()
 {
 	//disjoint set noneed to compressed since only query once or....
