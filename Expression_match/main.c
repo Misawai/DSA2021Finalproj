@@ -88,15 +88,15 @@ bool is_alpha_digit(char target)
 	
 }
 
-bool subjectMatching(char pattern[] , int sublen)
+bool subjectMatching(char pattern[] , int sublen,int num)
 {
 	int pattlen = strlen(pattern);
 	char *ptpointer = pattern; // using for strncmp
-	char *sjpointer = mails->subject; // using for strncmp
+	char *sjpointer = mails[num].subject; // using for strncmp
 	int head , tail = 0;
 	for (int i = 0; i < sublen; i++)
 	{
-		while (is_alpha_digit(mails->subject[i]))
+		while (is_alpha_digit(mails[num].subject[i]))
 		{
 			i++;
 		}
@@ -112,7 +112,7 @@ bool subjectMatching(char pattern[] , int sublen)
 					return true;
 				}	
 			}
-			while (!is_alpha_digit(mails->subject[i]) && i<sublen) // move to next token
+			while (!is_alpha_digit(mails[num].subject[i]) && i<sublen) // move to next token
 			{
 				i++;
 			}
@@ -120,7 +120,7 @@ bool subjectMatching(char pattern[] , int sublen)
 		}
 		else
 		{
-			while (!is_alpha_digit(mails->subject[i]) && i<sublen) // move to next token
+			while (!is_alpha_digit(mails[num].subject[i]) && i<sublen) // move to next token
 			{
 				i++;
 			}
@@ -131,15 +131,15 @@ bool subjectMatching(char pattern[] , int sublen)
 	
 }
 
-bool contentMatching(char pattern[] , int conlen )
+bool contentMatching(char pattern[] , int conlen,int num )
 {
 	int pattlen = strlen(pattern);
 	char *ptpointer = pattern;// using for strncmp
-	char *ctpointer = mails->content;//using for strncmp
+	char *ctpointer = mails[num].content;//using for strncmp
 	int head , tail;
 	for (int i = 0; i < conlen; i++)
 	{
-		while (is_alpha_digit(mails->subject[i]))
+		while (is_alpha_digit(mails[num].content[i]))
 		{
 			i++;
 		}
@@ -155,7 +155,7 @@ bool contentMatching(char pattern[] , int conlen )
 					return true;
 				}	
 			}
-			while (!is_alpha_digit(mails->content[i]) && i < conlen) // move to next token
+			while (!is_alpha_digit(mails[num].content[i]) && i < conlen) // move to next token
 			{
 				i++;
 			}
@@ -163,7 +163,7 @@ bool contentMatching(char pattern[] , int conlen )
 		}
 		else
 		{
-			while (!is_alpha_digit(mails->content[i]) && i < conlen) // move to next token
+			while (!is_alpha_digit(mails[num].content[i]) && i < conlen) // move to next token
 			{
 				i++;
 			}
@@ -174,13 +174,13 @@ bool contentMatching(char pattern[] , int conlen )
 	
 }
 
-bool Match(char pattern[] , int conlen , int sublen)
+bool Match(char pattern[] , int conlen , int sublen , int num)
 {
-	if (subjectMatching(pattern, sublen))
+	if (subjectMatching(pattern, sublen , num))
 		return true;
 	else
 	{
-		if(contentMatching(pattern , conlen)) return true;
+		if(contentMatching(pattern , conlen , num)) return true;
 		else return false;	
 	}
 }
@@ -207,7 +207,7 @@ bool cal(stack_op *optr , stack_bo* botr)
 	}
 }
 
-bool eval(char expression[] , int ans[] , int exlen , int conlen , int sublen)
+bool eval(char expression[] , int ans[] , int exlen , int conlen , int sublen, int num)
 {
 	stack_op *optr = newStack(exlen);
 	stack_bo *botr = newStack2(exlen);
@@ -225,7 +225,7 @@ bool eval(char expression[] , int ans[] , int exlen , int conlen , int sublen)
 				k++;
 				i++;
 			}
-			bo_push(botr,Match(temp,conlen,sublen));
+			bo_push(botr,Match(temp,conlen,sublen,num));
 			i--;
 			
 		}
@@ -254,8 +254,8 @@ bool eval(char expression[] , int ans[] , int exlen , int conlen , int sublen)
 	{
 		bo_push(botr,cal(optr,botr));
 	}
-	free(optr);
 	free(botr);
+	free(optr);
 	return botr->item[botr->top];
 }
 
@@ -267,9 +267,9 @@ void Expression_Match(char expression[] , int ans[] , int* len)
 	tep = 0;
 	for (int i = 0; i < n_mails; i++) // expression for n_mails
 	{
-		int conlen = strlen(mails->content);
-		int sublen = strlen(mails->subject);
-		if (eval(expression , ans , exlen , conlen ,sublen))
+		int conlen = strlen(mails[i].content);
+		int sublen = strlen(mails[i].subject);
+		if (eval(expression , ans , exlen , conlen ,sublen, i))
 		{
 			ans[tep] = i;
 			tep++;
