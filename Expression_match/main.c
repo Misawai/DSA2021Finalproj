@@ -254,6 +254,8 @@ bool eval(char expression[] , int ans[] , int exlen , int conlen , int sublen)
 	{
 		bo_push(botr,cal(optr,botr));
 	}
+	free(optr);
+	free(botr);
 	return botr->item[botr->top];
 }
 
