@@ -22,8 +22,18 @@ typedef struct disjoint_tree{
 }Tree;
 
 disjoint_tree ds[MAX];
+bool set[MAX];
 
 
+//source from TA's JUDGE PID 50//START
+inline void static init(const mail* data) {
+    int i = hash(data);
+    if (!set[data]) {
+        makeset(data);
+        set[data] = 1;
+    }
+}
+//source from TA's JUDGE PID 50//END
 //Method 2 
 mail make_set(mail *data)
 {
