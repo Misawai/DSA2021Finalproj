@@ -88,12 +88,17 @@ mail link(const mail *ra,const char *rb)
 		}
 	}
 }
-void Group_Analysis(int len, int mids[])
+void Group_Analysis(int len,const mail *mids[])
 {
 	//disjoint set noneed to compressed since only query once or....
 	//if many queries impelemented, path compression is needed.
 	//I think I need to decleare a hash table to do a "correspond table of ID and index.
-	
+	for(int i=0;i<sizeof(mids);i++)
+	{
+		makeset(mids[i]);
+	}
+	//Method 3 should be better when calculating the number of nodes in each group.
+	//Method 2 should be OK but code might be troublesome.
 	
 }
 int probing()
