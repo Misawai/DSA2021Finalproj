@@ -99,6 +99,11 @@ void Group_Analysis(int len,const mail *mids[])
 	}
 	//Method 3 should be better when calculating the number of nodes in each group.
 	//Method 2 should be OK but code might be troublesome.
+	//however, if we change the value in array become the index of root, than counting will be more faster. 
+	//But overall, Method 3 has more stability and better to maintain, since we are going to do path compression.
+	//path compression is necessary?
+	//actually for 10000 mails and 20000 maximum possible names, it seems be necessary since it get makeset O(1) and findset O(1)
+	
 	
 }
 int probing()
