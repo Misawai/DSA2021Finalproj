@@ -92,7 +92,8 @@ int count_group()
 {
 	for(int i=0;i<sizeof(ds);i++)
 	{
-		if 
+		if //we have worst case 20000 set need to arrange.
+		// need to think a better algo
 		
 	}
 }
