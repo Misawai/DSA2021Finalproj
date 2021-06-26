@@ -12,41 +12,32 @@ int main()
 	//struct int len(size of the set) int mids[512](id's)
 	
 }
+typedef struct node{
+	struct headtail * head;
+	char name[256];
+	struct node *next;
+}Node;
 
-typedef struct disjoint_tree{
-	struct disjoint_tree *p;
-	int rank;
-}Tree;
+typedef struct headtail{
+	struct node head;
+	struct node tail;
+}HeadTail;
 
-disjoint_tree ds[MAX];
-bool set[MAX];
+HeadTail list[MAX];
 
-int hash(const char* s)
+int hash(char input)
 {
 	
 }
 
-
-//source from TA's JUDGE PID 50//START
-inline void static init(const char* data) {
-    int i = hash(data);
-    if (!set[data]) {
-        makeset(data);
-        set[data] = 1;
-    }
-}
-//source from TA's JUDGE PID 50//END
-//Method 2 
-mail make_set(char *data)
+mail make_set(char in)
 {
-	int i=hash(data);//TBC
-	ds[i].parent=i;
-	ds[i].rank=0;
+	if ()
 	//have to find a proper hash function inorder to sort names properly
 	//maybe using linear hashing is a good way, however it might be time consuming
 	
 }
-mail find_set(const char *data)
+mail find_set(const mail *data)
 {
 	init(data);
 	int i=hash(data);
@@ -73,7 +64,7 @@ int cset(int i){
 }
 //SOURCE FROM TA's DSAJUDGE PID50
 
-mail link(const char *ra,const char *rb)
+mail link(const mail *ra,const char *rb)
 {
 	int a=find_set(ra), b=findset(rb);
 	if (ds[a].rank>ds[b].rank)
@@ -88,15 +79,7 @@ mail link(const char *ra,const char *rb)
 		}
 	}
 }
-int count_group()
-{
-	for(int i=0;i<sizeof(ds);i++)
-	{
-		int fined[10000];
-		if
-	}
-}
-void Group_Analysis(int len,const mail *mids[],int ans[])
+void Group_Analysis(int len,const mail *mids[])
 {
 	//disjoint set noneed to compressed since only query once or....
 	//if many queries impelemented, path compression is needed.
@@ -104,16 +87,12 @@ void Group_Analysis(int len,const mail *mids[],int ans[])
 	for(int i=0;i<sizeof(mids);i++)
 	{
 		makeset(mids[i]->from);
-		makeset(mids[i]->to);
-		link(mids[i]->from,mids[i]->to);
-	}	
-	//Method 3 should be better when calculating the number of nodes in each group.
-	//Method 2 should be OK but code might be troublesome.
-	//however, if we change the value in array become the index of root, than counting will be more faster. 
-	//But overall, Method 3 has more stability and better to maintain, since we are going to do path compression.
-	//path compression is necessary?
-	//actually for 10000 mails and 20000 maximum possible names, it seems be necessary since it get makeset O(1) and findset O(1)
-	ans[0]=count_group();
-	ans[1]=largest_group();
+	}
+	
+	
+	
+}
+int probing()
+{
 	
 }
