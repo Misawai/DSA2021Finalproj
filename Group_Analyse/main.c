@@ -92,8 +92,8 @@ int count_group()
 {
 	for(int i=0;i<sizeof(ds);i++)
 	{
-		int fined[10000];
-		if
+		if 
+		
 	}
 }
 void Group_Analysis(int len,const mail *mids[],int ans[])
