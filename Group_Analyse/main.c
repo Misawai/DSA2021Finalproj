@@ -88,10 +88,15 @@ mail link(const mail *ra,const char *rb)
 		}
 	}
 }
-void Group_Analysis()
+void Group_Analysis(int len, int mids[])
 {
 	//disjoint set noneed to compressed since only query once or....
 	//if many queries impelemented, path compression is needed.
 	//I think I need to decleare a hash table to do a "correspond table of ID and index.
+	
+	
+}
+int probing()
+{
 	
 }
