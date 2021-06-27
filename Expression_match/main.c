@@ -8,8 +8,6 @@ int n_mails, n_queries;
 mail *mails;
 query *queries;
 
-
-
 typedef struct stack_op
 {
     int top;
@@ -103,8 +101,6 @@ bool subjectMatching(char pattern[] , int sublen,int num)
 		head = i-1;
 		if ((head-tail+1) == pattlen)
 		{
-			char ch1 = *(sjpointer+tail);
-			char ch2 = *(ptpointer);
 			if (strncasecmp(ptpointer,(sjpointer+tail),pattlen) == 0)
 			{
 				return true;
@@ -130,6 +126,7 @@ bool subjectMatching(char pattern[] , int sublen,int num)
 	}
 	return false;
 	
+	
 }
 
 bool contentMatching(char pattern[] , int conlen,int num )
@@ -147,9 +144,6 @@ bool contentMatching(char pattern[] , int conlen,int num )
 		head = i-1;
 		if ((head-tail+1) == pattlen)
 		{
-			char ch1 = *(ctpointer+tail);
-			char ch2 = *(ptpointer);
-			int k =0;
 			if (strncasecmp(ptpointer,(ctpointer+tail),pattlen) == 0)
 			{
 				return true;
@@ -171,6 +165,7 @@ bool contentMatching(char pattern[] , int conlen,int num )
 		
 	}
 	return false;
+	
 	
 }
 
@@ -217,7 +212,7 @@ bool eval(char expression[], int exlen , int conlen , int sublen, int num)
 		if(expression[i] == '(') op_push(optr,expression[i]);
 		else if (is_alpha_digit(expression[i]))
 		{
-			char temp[100];
+			char temp[100] = {'\0'};
 			int k = 0;
 			while (i < exlen && is_alpha_digit(expression[i]))
 			{
@@ -231,8 +226,7 @@ bool eval(char expression[], int exlen , int conlen , int sublen, int num)
 		{
 			while (optr->top!=-1 && optr->item[optr->top]!='(')
 			{
-				bool value;
-				value = cal(optr,botr);
+				bool value = cal(optr,botr);
 				bo_push(botr,value);
 			}
 			if(optr->top!=-1) op_pop(optr);//pop '('
@@ -241,8 +235,7 @@ bool eval(char expression[], int exlen , int conlen , int sublen, int num)
 		{
 			while(optr->top!=-1 && op_preced(optr->item[optr->top])>=op_preced(expression[i])) // ! > & > |
             {
-                bool value;
-				value = cal(optr,botr);
+				bool value = cal(optr,botr);
                 bo_push(botr,value);
             }
 			op_push(optr,expression[i]);
