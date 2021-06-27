@@ -20,7 +20,7 @@ typedef struct disjoint_tree{
 
 disjoint_tree ds[MAX];
 bool set[MAX];
-
+bool only[MAX];//counting usage.
 int hash(const char* s)
 {
 	
@@ -37,7 +37,7 @@ inline void static init(const char* data) {
 }
 //source from TA's JUDGE PID 50//END
 //Method 2 
-mail make_set(char *data)
+char make_set(char *data)
 {
 	int i=hash(data);//TBC
 	ds[i].parent=i;
@@ -46,12 +46,13 @@ mail make_set(char *data)
 	//maybe using linear hashing is a good way, however it might be time consuming
 	
 }
-mail find_set(const char *data)
+char find_set(const char *data)
 {
 	init(data);
 	int i=hash(data);
 	if (ds[i].parent==i)
 	{
+		only[i]=1;
 		return ds[i].parent;
 	}
 	else
@@ -73,7 +74,7 @@ int cset(int i){
 }
 //SOURCE FROM TA's DSAJUDGE PID50
 
-mail link(const char *ra,const char *rb)
+char link(const char *ra,const char *rb)
 {
 	int a=find_set(ra), b=findset(rb);
 	if (ds[a].rank>ds[b].rank)
@@ -92,8 +93,13 @@ int count_group()
 {
 	for(int i=0;i<sizeof(ds);i++)
 	{
-		if //we have worst case 20000 set need to arrange.
-		// need to think a better algo
+		if (set[i])
+		{
+			if (only[i])
+			{
+				
+			}
+		}
 		
 	}
 }
