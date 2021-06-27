@@ -105,18 +105,18 @@ bool subjectMatching(char pattern[] , int sublen,int num)
 		{
 			char ch1 = *(sjpointer+tail);
 			char ch2 = *(ptpointer);
-			if (ch1 == ch2 || ch1 == toupper(ch2) || ch1 == tolower(ch2))
+			if (strncasecmp(ptpointer,(sjpointer+tail),pattlen) == 0)
 			{
-				if (strncmp((ptpointer+1),(sjpointer+tail+1),pattlen-1) == 0)
+				return true;
+			}
+			else
+			{
+				while (!is_alpha_digit(mails[num].subject[i]) && i<sublen) // move to next token
 				{
-					return true;
-				}	
+					i++;
+				}
+				head = tail = i;
 			}
-			while (!is_alpha_digit(mails[num].subject[i]) && i<sublen) // move to next token
-			{
-				i++;
-			}
-			head = tail = i;	
 		}
 		else
 		{
@@ -128,6 +128,7 @@ bool subjectMatching(char pattern[] , int sublen,int num)
 		}
 		
 	}
+	return false;
 	
 }
 
@@ -136,7 +137,7 @@ bool contentMatching(char pattern[] , int conlen,int num )
 	int pattlen = strlen(pattern);
 	char *ptpointer = pattern;// using for strncmp
 	char *ctpointer = mails[num].content;//using for strncmp
-	int head , tail;
+	int head = 0 , tail = 0;
 	for (int i = 0; i < conlen; i++)
 	{
 		while (is_alpha_digit(mails[num].content[i]))
@@ -148,12 +149,10 @@ bool contentMatching(char pattern[] , int conlen,int num )
 		{
 			char ch1 = *(ctpointer+tail);
 			char ch2 = *(ptpointer);
-			if (ch1 == ch2 || ch1 == toupper(ch2) || ch1 == tolower(ch2)) // "apple" = "Apple"
+			int k =0;
+			if (strncasecmp(ptpointer,(ctpointer+tail),pattlen) == 0)
 			{
-				if (strncmp((ptpointer+1),(ctpointer+tail+1),pattlen-1) == 0) // match token & pattern
-				{
-					return true;
-				}	
+				return true;
 			}
 			while (!is_alpha_digit(mails[num].content[i]) && i < conlen) // move to next token
 			{
@@ -171,6 +170,7 @@ bool contentMatching(char pattern[] , int conlen,int num )
 		}
 		
 	}
+	return false;
 	
 }
 
@@ -197,17 +197,17 @@ bool cal(stack_op *optr , stack_bo* botr)
 	{
 		bool bo2 = bo_pop(botr);
 		bool bo1 = bo_pop(botr);
-		bo_push(botr,bo1 && bo2);
+		bo_push(botr,bo1&bo2);
 	}
 	else if (temp == '|')
 	{
 		bool bo2 = bo_pop(botr);
 		bool bo1 = bo_pop(botr);
-		bo_push(botr,bo1 || bo2);
+		bo_push(botr,bo1|bo2);
 	}
 }
 
-bool eval(char expression[] , int ans[] , int exlen , int conlen , int sublen, int num)
+bool eval(char expression[], int exlen , int conlen , int sublen, int num)
 {
 	stack_op *optr = newStack(exlen);
 	stack_bo *botr = newStack2(exlen);
@@ -221,9 +221,7 @@ bool eval(char expression[] , int ans[] , int exlen , int conlen , int sublen, i
 			int k = 0;
 			while (i < exlen && is_alpha_digit(expression[i]))
 			{
-				temp[k] = expression[i];
-				k++;
-				i++;
+				temp[k++] = expression[i++];
 			}
 			bo_push(botr,Match(temp,conlen,sublen,num));
 			i--;
@@ -269,10 +267,9 @@ void Expression_Match(char expression[] , int ans[] , int* len)
 	{
 		int conlen = strlen(mails[i].content);
 		int sublen = strlen(mails[i].subject);
-		if (eval(expression , ans , exlen , conlen ,sublen, i))
+		if (eval(expression, exlen , conlen ,sublen, i))
 		{
-			ans[tep] = i;
-			tep++;
+			ans[tep++] = mails[i].id;
 		}	
 	}
 	(*len) = tep;  // change len value
@@ -284,8 +281,8 @@ int main(void) {
 	for(int i = 0; i < n_queries; i++)	
 		if(queries[i].type == expression_match)
 		{
-			int ans[100000] , len;
-			Expression_Match(queries->data.expression_match_data.expression , ans , &len);
+			int ans[10000] , len;
+			Expression_Match(queries[i].data.expression_match_data.expression , ans , &len);
 		  	api.answer(queries[i].id, ans , len);
 		}
     return 0;
