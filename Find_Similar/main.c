@@ -296,7 +296,7 @@ query *queries;
 
 int main(){
 	api.init(&n_mails, &n_queries, &mails, &queries);
-    int i = 0, j = 0;
+    int i = 0;
     for (int i = 0; i < n_queries; i++){
         if(queries[i].type == find_similar){
             int ans_array[10000];
@@ -306,12 +306,7 @@ int main(){
             printf("mid: %d, thresh: %f\n", mid, thresh);
             _find_similar(mails, n_mails, mid, 
                           thresh, ans_array, &ans_i);
-            //printf("finish a query\n");
-            //api.answer(queries[i].id, ans_array, ans_i);
-            printf("4: ");
-            for (int j = 0; j < ans_i; j++){
-                printf("%d ", ans_array[j]);
-            }
+            api.answer(queries[i].id, ans_array, ans_i);
             return 0;
         }
     }
