@@ -10,7 +10,6 @@ int main()
 	//using disjoinnt set to implememt
 	//For two different people, if A sends a mail to B in the mail set, then A is related to B and B is related to A.
 	//struct int len(size of the set) int mids[512](id's)
-	
 }
 typedef struct node{
 	struct headtail * head;
@@ -23,23 +22,32 @@ typedef struct headtail{
 	struct node tail;
 }HeadTail;
 
-HeadTail list[MAX];
 
-int hash(char input)
+
+typedef struct starter{
+	HeadTail list[MAX];
+	int currentmax;
+}Start;
+
+Start first;
+first.currentmax=0;
+
+void New_start()
 {
-	
+	first.list[first.currentmax]=malloc(sizeof(HeadTail));
 }
 
-mail make_set(char in)
+char make_set(char in)
 {
-	if ()
-	//have to find a proper hash function inorder to sort names properly
-	//maybe using linear hashing is a good way, however it might be time consuming
-	
+	if (find_set(in)==0)
+	{
+		first.list[first.currentmax]=malloc(sizeof(HeadTail));
+	}
 }
+
 mail find_set(const mail *data)
 {
-	init(data);
+	for(int i=0;i<)
 	int i=hash(data);
 	if (ds[i].parent==i)
 	{

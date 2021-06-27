@@ -20,12 +20,11 @@ typedef struct disjoint_tree{
 
 disjoint_tree ds[MAX];
 bool set[MAX];
-bool only[MAX];//counting usage.
+
 int hash(const char* s)
 {
 	
 }
-
 
 //source from TA's JUDGE PID 50//START
 inline void static init(const char* data) {
@@ -52,7 +51,7 @@ char find_set(const char *data)
 	int i=hash(data);
 	if (ds[i].parent==i)
 	{
-		only[i]=1;
+		;
 		return ds[i].parent;
 	}
 	else
@@ -91,16 +90,24 @@ char link(const char *ra,const char *rb)
 }
 int count_group()
 {
-	for(int i=0;i<sizeof(ds);i++)
+	int count=0;
+	for(i=0;i<sizeof(ds);i++)
 	{
 		if (set[i])
 		{
-			if (only[i])
+			if(only())
 			{
-				
+				count++;
 			}
 		}
-		
+	}
+	return count;
+}
+int largest_group()
+{
+	for(i=0;i<sizeof(ds);i++)
+	{
+		find_set(ds[i])
 	}
 }
 void Group_Analysis(int len,const mail *mids[],int ans[])
