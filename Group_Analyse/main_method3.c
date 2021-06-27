@@ -1,43 +1,49 @@
-#include"api.h"
-#include<stdio.h>
+#include "api.h"
+#include <stdio.h>
 #include<stdbool.h>
 #define MAX 10000
-int main()
-{
-	int n_mails, n_queries;
-	mail *mails;
-	query queries;
-	api.init(&n_mails, &n_queries, &mails, &queries);//init
-	//using disjoinnt set to implememt
-	//For two different people, if A sends a mail to B in the mail set, then A is related to B and B is related to A.
-	//struct int len(size of the set) int mids[512](id's)
-	
-}
+// The testdata only contains the first 100 mails (mail1 ~ mail100)
+// and 2000 queries for you to debug.
+
+int n_mails, n_queries;
+mail *mails;
+query *queries;
 
 typedef struct disjoint_tree{
-	struct disjoint_tree *p;
+	struct disjoint_tree *parent;
 	int rank;
 }Tree;
 
-disjoint_tree ds[MAX];
+Tree ds[MAX];
 bool set[MAX];
 int largecount[MAX];
+char com[MAX][32]={};
+char find_set(const char *data);
+char makeset(const char *data);
+char linkage(const char *ra,const char *rb);
 int hash(const char* s)
 {
-	
+	for(int i=0;i<MAX;i++)
+	{
+		if (strcmp(s,com[i])==0)
+		{
+			return i;
+		}
+		
+	}
 }
 
 //source from TA's JUDGE PID 50//START
 inline void static init(const char* data) {
     int i = hash(data);
-    if (!set[data]) {
+    if (!set[i]) {
         makeset(data);
-        set[data] = 1;
+        set[i] = true;
     }
 }
 //source from TA's JUDGE PID 50//END
 //Method 2 
-char make_set(char *data)
+char makeset(const char *data)
 {
 	int i=hash(data);//TBC
 	ds[i].parent=i;
@@ -80,9 +86,9 @@ int cset(int i){
 }
 //SOURCE FROM TA's DSAJUDGE PID50
 
-char link(const char *ra,const char *rb)
+char linkage(const char *ra,const char *rb)
 {
-	int a=find_set(ra), b=findset(rb);
+	int a=find_set(ra), b=find_set(rb);
 	if (ds[a].rank>ds[b].rank)
 	{
 		ds[b].parent=a;
@@ -98,7 +104,7 @@ char link(const char *ra,const char *rb)
 int count_group()
 {
 	int count=0;
-	for(i=0;i<sizeof(ds);i++)
+	for(int i=0;i<sizeof(ds);i++)
 	{
 		if (set[i])//if this set exist
 		{
@@ -112,10 +118,11 @@ int count_group()
 }
 int largest_group()
 {
-	for(i=0;i<sizeof(ds);i++)
+	int temp=0;
+	for(int i=0;i<sizeof(ds);i++)
 	{
 		//traverse all elements, count their findset parents and add them into a hash table.
-		largecount[findset(ds)]=largecount[findset(ds)]+1;
+		largecount[find_set(ds)]=largecount[find_set(ds)]+1;
 	}
 	for (int i=0;i<sizeof(largecount);i++)
 	{
@@ -135,7 +142,7 @@ void Group_Analysis(int len,const mail *mids[],int ans[])
 	{
 		makeset(mids[i]->from);
 		makeset(mids[i]->to);
-		link(mids[i]->from,mids[i]->to);
+		linkage(mids[i]->from,mids[i]->to);
 	}	
 	//Method 3 should be better when calculating the number of nodes in each group.
 	//Method 2 should be OK but code might be troublesome.
@@ -146,4 +153,14 @@ void Group_Analysis(int len,const mail *mids[],int ans[])
 	ans[0]=count_group();
 	ans[1]=largest_group();
 	
+}
+
+int main(void) {
+	api.init(&n_mails, &n_queries, &mails, &queries);
+
+	for(int i = 0; i < n_queries; i++)
+		if(queries[i].type == expression_match)
+		  api.answer(queries[i].id, NULL, 0);
+
+  return 0;
 }
