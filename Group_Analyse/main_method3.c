@@ -45,18 +45,17 @@ char make_set(char in)
 	}
 }
 
-mail find_set(const mail *data)
+char find_set(const mail *data)
 {
-	for(int i=0;i<)
-	int i=hash(data);
-	if (ds[i].parent==i)
+	for(int i=0;i<=first.currentmax,i++)
 	{
-		return ds[i].parent;
+		node=traverse(first.list[i]);
+		if(Node!=NULL)
+		{
+			return node;
+		}
 	}
-	else
-	{
-		return cset(i);
-	}
+	
 	
 }
 //SOURCE FROM TA's DSAJUDGE PID50
@@ -98,9 +97,5 @@ void Group_Analysis(int len,const mail *mids[])
 	}
 	
 	
-	
-}
-int probing()
-{
 	
 }
