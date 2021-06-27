@@ -45,13 +45,19 @@ char make_set(char *data)
 	//maybe using linear hashing is a good way, however it might be time consuming
 	
 }
+bool only(const int i)
+{
+	if (ds[i].parent==i)
+	{
+		return true;
+	}
+}
 char find_set(const char *data)
 {
 	init(data);
 	int i=hash(data);
 	if (ds[i].parent==i)
 	{
-		;
 		return ds[i].parent;
 	}
 	else
@@ -95,7 +101,7 @@ int count_group()
 	{
 		if (set[i])//if this set exist
 		{
-			if(only())//if this set is the parent
+			if(only(i))//if this set is the parent
 			{
 				count++;//++
 			}
