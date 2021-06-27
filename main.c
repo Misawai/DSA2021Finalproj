@@ -670,10 +670,10 @@ void _find_similar(mail* mails, int n_mails, int mid,
     tokenList* tl = createTokenList();
     clock_t cons_start = clock();
     construct_hash_table(hash_table, tl, mails[mid], &token_size_A);
-    clock_t cons_end = clock();
+   /* clock_t cons_end = clock();
     printf("construct hash table cost %f s\n", 
             (double) (cons_end - cons_start) / CLOCKS_PER_SEC); 
-
+*/
     clock_t check_start = clock();
     // Check similarity from 0 to n_mails
     for (int i = 0; i < n_mails; i++){
@@ -700,8 +700,8 @@ void _find_similar(mail* mails, int n_mails, int mid,
     }
 
     clock_t check_end = clock();
-    printf("check intersection cost %f s\n", 
-            (double) (check_end - check_start) / CLOCKS_PER_SEC); 
+   /* printf("check intersection cost %f s\n", 
+            (double) (check_end - check_start) / CLOCKS_PER_SEC); */
 }
 
 
@@ -721,7 +721,7 @@ int main(void) {
             int ans_i = 0;
             int mid = queries[i].data.find_similar_data.mid;
             double thresh = queries[i].data.find_similar_data.threshold;
-            printf("mid: %d, thresh: %f\n", mid, thresh);
+            /*printf("mid: %d, thresh: %f\n", mid, thresh);*/
             _find_similar(mails, n_mails, mid, 
                           thresh, ans_array, &ans_i);
             api.answer(queries[i].id, ans_array, ans_i);
