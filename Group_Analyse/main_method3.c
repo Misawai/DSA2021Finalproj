@@ -19,7 +19,8 @@ bool set[MAX];
 int largecount[MAX];
 char com[MAX][32]={};
 char find_set(const char *data);
-char find_set(const char *data);
+char makeset(const char *data);
+char linkage(const char *ra,const char *rb);
 int hash(const char* s)
 {
 	for(int i=0;i<MAX;i++)
@@ -42,7 +43,7 @@ inline void static init(const char* data) {
 }
 //source from TA's JUDGE PID 50//END
 //Method 2 
-char make_set(char *data)
+char makeset(const char *data)
 {
 	int i=hash(data);//TBC
 	ds[i].parent=i;
@@ -87,7 +88,7 @@ int cset(int i){
 
 char linkage(const char *ra,const char *rb)
 {
-	int a=find_set(ra), b=findset(rb);
+	int a=find_set(ra), b=find_set(rb);
 	if (ds[a].rank>ds[b].rank)
 	{
 		ds[b].parent=a;
@@ -121,7 +122,7 @@ int largest_group()
 	for(int i=0;i<sizeof(ds);i++)
 	{
 		//traverse all elements, count their findset parents and add them into a hash table.
-		largecount[findset(ds)]=largecount[findset(ds)]+1;
+		largecount[find_set(ds)]=largecount[find_set(ds)]+1;
 	}
 	for (int i=0;i<sizeof(largecount);i++)
 	{
