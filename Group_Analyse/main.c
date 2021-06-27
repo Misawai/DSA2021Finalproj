@@ -20,7 +20,7 @@ typedef struct disjoint_tree{
 
 disjoint_tree ds[MAX];
 bool set[MAX];
-
+int largecount[MAX];
 int hash(const char* s)
 {
 	
@@ -93,11 +93,11 @@ int count_group()
 	int count=0;
 	for(i=0;i<sizeof(ds);i++)
 	{
-		if (set[i])
+		if (set[i])//if this set exist
 		{
-			if(only())
+			if(only())//if this set is the parent
 			{
-				count++;
+				count++;//++
 			}
 		}
 	}
@@ -107,8 +107,17 @@ int largest_group()
 {
 	for(i=0;i<sizeof(ds);i++)
 	{
-		find_set(ds[i])
+		//traverse all elements, count their findset parents and add them into a hash table.
+		largecount[findset(ds)]=largecount[findset(ds)]+1;
 	}
+	for (int i=0;i<sizeof(largecount);i++)
+	{
+		if (temp<largecount[i])
+		{
+			temp=largecount[i];
+		}
+	}
+	return temp;
 }
 void Group_Analysis(int len,const mail *mids[],int ans[])
 {
